@@ -1,0 +1,17 @@
+:local .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+:local .header {}
+
+:local .content {
+    display: flex;
+    flex-direction: row;
+}
+
+:local .footer {
+    display: flex;
+    flex-direction: row;
+}
