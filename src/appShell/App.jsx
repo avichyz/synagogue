@@ -10,7 +10,10 @@ class App extends Component {
   render() {
     return (
       <div className={styles.app}>
+      <div className={styles.headerContainer}>
+        <div className={styles.basad}>בס"ד</div>
         <CHeader headerText={"אוהל אוהלי"} />
+        </div>
         <main>
           <Route exact path="/" component={ViewScreenContainer}/>
           <Route exact path="/viewScreen" component={ViewScreenContainer}/>
