@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ImgView from '../../view/imgView/ImgView';
 import Times from '../../view/times/Times';
-import Messages from '../../view/messages/Messages';
+import MessagesNew from '../../view/messages/MessagesNew';
 import PropTypes from 'prop-types';
 import styles from './viewScreen.scss';
 
@@ -19,9 +19,29 @@ class ViewScreen extends Component {
                     <Times />
                 </div>
                 <div className={styles.footer}>
-                    <Messages />
-                    <Messages />
-                    <Messages />
+                    <MessagesNew className={styles.message}/>
+                    <MessagesNew className={styles.message}>
+                    <div>
+                        יופי
+    אחלה
+    כיף מגניב 
+    סבהה                    יופי
+אחלה
+כיף מגניב 
+סבהה                    יופי
+אחלה
+כיף מגניב 
+סבהה                    יופי
+אחלה
+כיף מגניב 
+סבהה                    יופי
+אחלה
+כיף מגניב 
+סבהה
+    
+                    </div>
+                    </MessagesNew>
+                    <MessagesNew className={styles.message}/>
                 </div>
             </div>
         )

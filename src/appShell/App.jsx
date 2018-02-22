@@ -14,7 +14,7 @@ class App extends Component {
         <div className={styles.basad}>בס"ד</div>
         <CHeader headerText={"אוהל אוהלי"} />
         </div>
-        <main>
+        <main className={styles.main}>
           <Route exact path="/" component={ViewScreenContainer}/>
           <Route exact path="/viewScreen" component={ViewScreenContainer}/>
           <Route exact path="/editScreen" component={EditScreenContainer} />
