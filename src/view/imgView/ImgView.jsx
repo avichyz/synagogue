@@ -10,10 +10,8 @@ class ImgView extends Component {
     render() {
         const { selectedImageSrc } = this.props;
         return (
-            <Segment className={styles.container}>
                 <Image src={selectedImageSrc}
                     centered size='huge' />
-            </Segment>
         )
     }
 }
