@@ -19,7 +19,5 @@ class CHeader extends Component {
     }
 }
 
-{/* <div className={styles.content}>
-</div> */}
 CHeader.prototypes = propTypes;
 export default CHeader;
