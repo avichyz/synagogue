@@ -5,16 +5,51 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    direction: rtl;
 }
 
-:local .message {
-    width: 33.3333%;
+:local .segmentContainer {
+    margin: 0px !important;
+    flex-grow: 1;
+    //width: 20%;
+    direction: rtl;
 }
 
-:local .content {
+:local .messageContainer {
+    flex-grow: 1;
+}
+
+:local .header {
     width: 100%;
     display: flex;
     flex-direction: row;
+}
+
+
+:local .centerRow {
+    flex-grow: 1;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+}
+
+:local .sidePanel {
+    flex-grow: 1;
+}
+
+:local .centerPanel {
+    width: 50%;
+    margin: 0 !important;
+}
+:local .rightSidePanel {
+    //flex-grow: 1;
+    width: 25%;
+}
+
+:local .leftSidePanel {
+    //flex-grow: 1;
+    width: 25%;
 }
 
 :local .footer {
