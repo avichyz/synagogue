@@ -12,8 +12,8 @@ class MessagesNew extends Component {
         const segmentClasses = classNames(className, styles.container)
         return (
             <Segment className={segmentClasses}>
-                <div class="microsoft container">
-                    <div class="marquee">
+                <div className="microsoft container">
+                    <div className={`marquee ${this.props.speed}`}>
                     {this.props.children}
                     </div>
                 </div>
