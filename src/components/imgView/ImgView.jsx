@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Segment, Image } from 'semantic-ui-react'
+import { Image } from 'semantic-ui-react'
 import styles from './imgView.scss';
 
 const propTypes = {

@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import ImgView from '../../view/imgView/ImgView';
-import Times from '../../view/times/Times';
-import MessagesNew from '../../view/messages/MessagesNew';
+import ImgView from '../../components/imgView/ImgView';
+import Times from '../../components/times/Times';
+import MessagesNew from '../../components/messages/MessagesNew';
 import PropTypes from 'prop-types';
 import styles from './viewScreen.scss';
 import { Segment } from 'semantic-ui-react'
+import CenterBoxContainer from './centerBox/CenterBoxContainer';
 import timesEnum from '../../timesEnum';
 
 
@@ -56,12 +57,8 @@ class ViewScreen extends Component {
             <div className={styles.container}>
                 <div className={styles.header}>
                     <Segment className={styles.segmentContainer}>
-                        <div>
-                            <Times get={timesEnum.currentTime} />
-                        </div>
-                        <div>
-                            <Times get={timesEnum.todaysDate} />
-                        </div>
+                            <Times className={styles.currentTime} get={timesEnum.currentTime} />
+                            <Times className={styles.currentDate} get={timesEnum.todaysDate} />
                     </Segment>
                     <Segment className={styles.segmentContainer}>
                         <Times get={timesEnum.todaysDate} />
@@ -72,23 +69,13 @@ class ViewScreen extends Component {
                 </div>
                 <div className={styles.centerRow}>
                     <MessagesNew speed="superSlow" className={styles.rightSidePanel}>
-                        <div>
-                            <Times get={timesEnum.shabbatEntrence} />
-                        </div>
-                        <div>
-                            <Times get={timesEnum.shabbatExit} />
-                        </div>
+                        <Times get={timesEnum.shabbatEntrence} />
+                        <Times get={timesEnum.shabbatExit} />
                     </MessagesNew>
-                    <Segment className={styles.centerPanel}>
-                        <ImgView selectedImageSrc={selectedImageSrc} />
-                    </Segment>
+                    <CenterBoxContainer className={styles.segmentContainer}/>
                     <MessagesNew speed="superSlow" className={styles.leftSidePanel}>
-                        <div>
                             <Times get={timesEnum.shabbatEntrence} />
-                        </div>
-                        <div>
                             <Times get={timesEnum.shabbatExit} />
-                        </div>
                     </MessagesNew>
                 </div>
                 <div className={styles.footer}>

@@ -130,11 +130,12 @@ class Times extends Component {
             let options = this.state.options;
             options.start = this.getFriday();
             options.end = this.getFriday();
-            this.setState()
+            this.setState({options:options});
         } else if (this.props.get === timesEnum.shabbatExit) {
             let options = this.state.options;
             options.start = this.getSaturday();
             options.end = this.getSaturday();
+            this.setState({options:options});
         }
 
         if(this.props.get === timesEnum.currentTime) {
@@ -147,8 +148,14 @@ class Times extends Component {
         }
     }
     render() {
-        const timesEnum1 = timesEnum;
-        return (<span>
+        
+        if((!this.props.options || (!this.props.options.start && !this.props.options.end)) &&
+        [timesEnum.shabbatEntrence, timesEnum.shabbatExit].includes(this.props.get)) {
+            return(<div></div>);
+        }
+                
+        return (
+            <div className={this.props.className}>
             {
                 this.props.get === timesEnum.currentTime && 
                 this.state.currentTime
@@ -157,12 +164,12 @@ class Times extends Component {
                 this.state.todayHebDateString
                 ||
                 this.props.get === timesEnum.shabbatEntrence && this.state.candleLightingEvent &&
-                `כניסת השבת:${this.state.candleLightingEvent.eventTimeStr}`
+                `כניסת השבת: ${this.state.candleLightingEvent.eventTimeStr}`
                 ||
                 this.props.get === timesEnum.shabbatExit && this.state.havdalahEvent &&
-                `צאת השבת:${this.state.havdalahEvent.eventTimeStr}`
+                `צאת השבת: ${this.state.havdalahEvent.eventTimeStr}`
             }
-        </span>
+            </div>
         )
     }
 }

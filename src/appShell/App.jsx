@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom'
 import { Button } from 'semantic-ui-react'
-import EditScreenContainer from '../modules/editScreenContainer';
+import EditScreenContainer from '../modules/editScreen/editScreenContainer';
 import ViewScreenContainer from '../modules/viewScreen/viewScreenContainer';
 import CHeader from '../components/header/CHeader';
 import styles from './app.scss';
