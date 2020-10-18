@@ -6,10 +6,11 @@ import PropTypes from 'prop-types';
 import styles from './centerBox.scss';
 import { Segment } from 'semantic-ui-react'
 import timesEnum from '../../../timesEnum';
+import TextAreaContainer from '../../../components/textArea/TextAreaContainer';
 
 
 const proptypes = {
-    selectedImageSrc: PropTypes.string.isRequired
+    // imgUrl: PropTypes.string.isRequired
 }
 class CenterBox extends Component {
     constructor(props) {
@@ -17,17 +18,20 @@ class CenterBox extends Component {
     }
 
     render() {
-        const { selectedImageSrc } = this.props;
+        const { textContent, imgUrl, className } = this.props;
 
         return (<Fragment>
             {
-                selectedImageSrc &&
-                <Segment className={this.props.className} style={{backgroundImage: `url(${selectedImageSrc})`}}>
+                textContent &&
+                <Segment className={this.props.className}>
+                    <TextAreaContainer 
+                    onSave={this.props.onSave} 
+                    content={textContent}/>
                 </Segment>
                 ||
-                <Segment className={this.props.className}>
-                <ImgView selectedImageSrc={selectedImageSrc} />
-                </Segment>
+                imgUrl &&
+                <Segment className={this.props.className} 
+                style={{backgroundImage: `url(${imgUrl})`, backgroundRepeat:'round'}}/>
             }
             </Fragment>
         )

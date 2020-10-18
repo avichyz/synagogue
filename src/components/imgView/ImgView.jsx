@@ -4,7 +4,7 @@ import { Image } from 'semantic-ui-react'
 import styles from './imgView.scss';
 
 const propTypes = {
-    selectedImageSrc: PropTypes.string
+    // selectedImageSrc: PropTypes.string
 }
 class ImgView extends Component {
     render() {

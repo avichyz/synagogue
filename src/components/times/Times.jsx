@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { HebrewCalendar, HDate, Location, Event, Locale } from '@hebcal/core';
+import { HebrewCalendar, HDate, Location, Event, Locale, Zmanim } from '@hebcal/core';
 import timesEnum from '../../timesEnum';
+import moment from 'moment'
+//import Moment from 'react-moment';
 import styles from './times.scss';
 
 const oneSecond = 100;
@@ -16,11 +18,9 @@ class Times extends Component {
         this.startDate = this.startDate.bind(this);
         this.startTime = this.startTime.bind(this);
         this.setEvents = this.setEvents.bind(this);
+        this.loadZmanim = this.loadZmanim.bind(this);
 
         const options = {
-            // year: (new Date()).getFullYear(),
-            // month: 1,
-            // numYears: 1,
             start: (props.startDate || props.date || new Date()),
             end: (props.endDate || props.date || new Date()),
             isHebrewYear: false,
@@ -62,6 +62,35 @@ class Times extends Component {
         }
         const t = setTimeout(this.startTime, 500);
     }
+    loadZmanim() {
+        this.setState({zmanim: new Zmanim(new Date(), Location.lookup('Beer Sheva').getLatitude(), Location.lookup('Beer Sheva').getLongitude())});
+    }
+    
+//     setTimes() {
+//         const zmanim = new Zmanim();
+//         .suntime() ⇒ ZmanimTimesResult
+// .sunrise() ⇒ Date
+// .sunset() ⇒ Date
+// .hour() ⇒ number
+// .hourMins() ⇒ number
+// .gregEve() ⇒ Date
+// .nightHour() ⇒ number
+// .nightHourMins() ⇒ number
+// .hourOffset(hours) ⇒ Date
+// .chatzot() ⇒ Date
+// .chatzotNight() ⇒ Date
+// .alotHaShachar() ⇒ Date
+// .misheyakir() ⇒ Date
+// .misheyakirMachmir() ⇒ Date
+// .sofZmanShma() ⇒ Date
+// .sofZmanTfilla() ⇒ Date
+// .minchaGedola() ⇒ Date
+// .minchaKetana() ⇒ Date
+// .plagHaMincha() ⇒ Date
+// .tzeit() ⇒ Date
+// .neitzHaChama() ⇒ Date
+// .shkiah() ⇒ Date
+//     }
     setEvents() {
         //Events
         const events = HebrewCalendar.calendar(this.state.options);
@@ -126,6 +155,8 @@ class Times extends Component {
         }
     }
     componentDidMount() {
+        this.loadZmanim();
+
         if (this.props.get === timesEnum.shabbatEntrence) {
             let options = this.state.options;
             options.start = this.getFriday();
@@ -157,6 +188,12 @@ class Times extends Component {
         return (
             <div className={this.props.className}>
             {
+                this.state.zmanim && this.props.get === timesEnum.sunrise && 
+                `זריחה: ${moment(this.state.zmanim.sunrise()).format('HH:mm')}`
+                ||
+                this.state.zmanim && this.props.get === timesEnum.sunset && 
+                `שקיעה: ${moment(this.state.zmanim.sunset()).format('HH:mm')}`
+                ||
                 this.props.get === timesEnum.currentTime && 
                 this.state.currentTime
                 ||

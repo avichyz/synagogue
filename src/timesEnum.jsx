@@ -4,7 +4,8 @@ const timesEnum = {
     shabbatEntrence: 'shabbatEntrence',
     shabbatExit: 'shabbatExit',
     todaysDate: 'todaysDate',
-    sunRise: 'sunRise'
+    sunrise: 'sunrise',
+    sunset: 'sunset'
 }
 
 export default timesEnum;

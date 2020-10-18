@@ -11,7 +11,7 @@ class CHeader extends Component {
     render() {
         const { headerText, headerIcon } = this.props;
         return (
-            <Header as='h1' textAlign='center' className={styles.header}>
+            <Header textAlign='center' className={`${styles.header} ${this.props.className}`}>
                 <div>{headerText}</div>
                 <div>{headerIcon}</div>
             </Header>

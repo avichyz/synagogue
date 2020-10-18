@@ -10,7 +10,6 @@ import timesEnum from '../../timesEnum';
 
 
 const proptypes = {
-    selectedImageSrc: PropTypes.string.isRequired
 }
 class ViewScreen extends Component {
     constructor(props) {
@@ -57,7 +56,6 @@ class ViewScreen extends Component {
             <div className={styles.container}>
                 <div className={styles.header}>
                     <Segment className={styles.segmentContainer}>
-                            <Times className={styles.currentTime} get={timesEnum.currentTime} />
                             <Times className={styles.currentDate} get={timesEnum.todaysDate} />
                     </Segment>
                     <Segment className={styles.segmentContainer}>
@@ -74,8 +72,8 @@ class ViewScreen extends Component {
                     </MessagesNew>
                     <CenterBoxContainer className={styles.segmentContainer}/>
                     <MessagesNew speed="superSlow" className={styles.leftSidePanel}>
-                            <Times get={timesEnum.shabbatEntrence} />
-                            <Times get={timesEnum.shabbatExit} />
+                            <Times get={timesEnum.sunrise} />
+                            <Times get={timesEnum.sunset} />
                     </MessagesNew>
                 </div>
                 <div className={styles.footer}>
