@@ -14,7 +14,7 @@ class MessagesNew extends Component {
             <Segment className={segmentClasses}>
                 <div className="microsoft container">
                     <div className={`marquee ${this.props.speed}`}>
-                    {this.props.children}
+                        {this.props.children}
                     </div>
                 </div>
             </Segment>

@@ -34,6 +34,9 @@
     &.superSlow{
         animation: marquee 30s linear infinite;
     }
+    &.stop{
+        animation: none;
+    }
 }
 
 .marquee:hover {

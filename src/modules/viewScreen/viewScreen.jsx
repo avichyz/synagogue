@@ -66,14 +66,17 @@ class ViewScreen extends Component {
                     </Segment>
                 </div>
                 <div className={styles.centerRow}>
-                    <MessagesNew speed="superSlow" className={styles.rightSidePanel}>
+                    <MessagesNew speed="stop" className={styles.rightSidePanel}>
                         <Times get={timesEnum.shabbatEntrence} />
                         <Times get={timesEnum.shabbatExit} />
                     </MessagesNew>
-                    <CenterBoxContainer className={styles.segmentContainer}/>
-                    <MessagesNew speed="superSlow" className={styles.leftSidePanel}>
-                            <Times get={timesEnum.sunrise} />
-                            <Times get={timesEnum.sunset} />
+                    <CenterBoxContainer className={styles.centerPanel}/>
+                    <MessagesNew speed="stop" className={styles.leftSidePanel}>
+                            <div className={styles.todaysTimesContainer}>
+                                <div className={styles.todaysTimesTitle}>זמני היום</div>
+                                <Times get={timesEnum.sunrise} />
+                                <Times get={timesEnum.sunset} />
+                            </div>
                     </MessagesNew>
                 </div>
                 <div className={styles.footer}>

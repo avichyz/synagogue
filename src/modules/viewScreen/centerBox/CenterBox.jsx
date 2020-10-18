@@ -10,7 +10,6 @@ import TextAreaContainer from '../../../components/textArea/TextAreaContainer';
 
 
 const proptypes = {
-    // imgUrl: PropTypes.string.isRequired
 }
 class CenterBox extends Component {
     constructor(props) {

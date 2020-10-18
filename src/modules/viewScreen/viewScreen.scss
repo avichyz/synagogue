@@ -7,7 +7,14 @@
     align-items: center;
     direction: rtl;
 }
-
+:local .todaysTimesContainer {
+    font-size: 20px;
+}
+:local .todaysTimesTitle{
+    font-size: 40px;
+    font-weight: 500;
+    text-decoration: underline;
+}
 :local .currentDate {
     font-size: 30px;
 }
@@ -15,7 +22,6 @@
 :local .segmentContainer {
     margin: 0px !important;
     flex-grow: 1;
-    //width: 20%;
     direction: rtl;
 }
 
@@ -24,7 +30,7 @@
 }
 
 :local .header {
-    flex-grow: 1;
+    height: 10%;
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -32,7 +38,7 @@
 
 
 :local .centerRow {
-    flex-grow: 100;
+    height: 65%;
     width: 100%;
     overflow: hidden;
     display: flex;
@@ -48,18 +54,16 @@
     margin: 0 !important;
 }
 :local .rightSidePanel {
-    //flex-grow: 1;
     width: 25%;
 }
 
 :local .leftSidePanel {
-    //flex-grow: 1;
     width: 25%;
 }
 
 :local .footer {
     width: 100%;
-    flex-grow: 10;
+    height: 25%;
     display: flex;
     flex-direction: row;
 }
