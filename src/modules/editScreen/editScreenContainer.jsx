@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
+import ViewScreenContainer from '../viewScreen/viewScreenContainer';
 // import { Button } from 'semantic-ui-react'
 
 class EditScreenContainer extends Component {
     render() {
         return (
-            <div >
-                Edit
-            </div>
+            <ViewScreenContainer editMode={true}/>
         )
     }
 }

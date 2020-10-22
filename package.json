@@ -29,6 +29,8 @@
     "history": "^4.7.2",
     "html-webpack-plugin": "2.29.0",
     "jest": "20.0.4",
+    "jodit": "^3.4.29",
+    "jodit-react": "^1.0.66",
     "moment": "^2.29.1",
     "node-sass": "^4.14.1",
     "object-assign": "4.1.1",

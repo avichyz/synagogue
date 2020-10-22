@@ -7,6 +7,7 @@ class CenterBoxContainer extends Component {
         super(props);
         this.onSave=this.onSave.bind(this);
         this.moveToNextItem = this.moveToNextItem.bind(this);
+        this.moveToPrevItem = this.moveToPrevItem.bind(this);
         this.state = {
             images: ['https://www.talkwalker.com/images/2020/blog-headers/image-analysis.png'],
             texts: [{
@@ -51,13 +52,25 @@ class CenterBoxContainer extends Component {
             this.setState({ currentText: ((this.state.currentText||0)+1) % this.state.texts.length, currentItemType: "text" });
         }
     }
+    moveToPrevItem() {
+        if (this.state.currentImage===null && this.state.currentText===null) {
+            this.setState({ currentImage: 0, currentItemType: "image" });
+        } else if (this.state.currentItemType==="text") {
+            this.setState({ currentImage: Math.abs((this.state.currentImage||0)-1) % this.state.images.length, currentItemType: "image" });
+        } else {
+            this.setState({ currentText: Math.abs((this.state.currentText||0)-1) % this.state.texts.length, currentItemType: "text" });
+        }
+    }
     onSave(content) {
         let texts = this.state.texts;
         texts.push({content:content});
         this.setState({texts:texts});
     }
     componentDidMount() {
-        const interval = setInterval(this.moveToNextItem, 5000);
+        this.moveToNextItem();
+        if(!this.props.editMode) {
+            const interval = setInterval(this.moveToNextItem, 5000);
+        } 
     }
     render() {
         const { texts, images, currentImage, currentText, currentItemType } = this.state;
@@ -65,6 +78,9 @@ class CenterBoxContainer extends Component {
             <CenterBox
                 className={this.props.className}
                 onSave={this.onSave}
+                editMode={this.props.editMode}
+                onNextItem={this.moveToNextItem}
+                onPrevItem={this.moveToPrevItem}
                 imgUrl={currentItemType==="image"&&currentImage != null ? images[currentImage] : null}
                 textContent={currentItemType==="text"&&currentText != null ? texts[currentText] : null}
             />

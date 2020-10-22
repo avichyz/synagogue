@@ -10,7 +10,7 @@
 }
 
 :local .main {
-    height: 93%;
+    height: 100%;
     width: 100%;
     padding: 30px 0px 30px 0px;
 }
@@ -24,7 +24,7 @@
 :local .headerContainer {
     padding-top: 16px;
     width: 95%;
-    height: 7%;
+    height: auto;
 }
 
 :local .mainHeader {

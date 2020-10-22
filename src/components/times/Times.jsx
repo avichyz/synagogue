@@ -8,7 +8,7 @@ import styles from './times.scss';
 
 const oneSecond = 100;
 const oneMinute = oneSecond * 60;
-const oneHour = oneMinute*60;
+const oneHour = oneMinute * 60;
 
 const propTypes = {
 }
@@ -39,15 +39,15 @@ class Times extends Component {
     startDate() {
         // Regular today
         const hebDate = new HDate();
-        this.setState({todayHebDateString: hebDate.renderGematriya()});
-        
+        this.setState({ todayHebDateString: hebDate.renderGematriya() });
+
         // refresh every hour
         const t = setTimeout(this.startDate, oneHour);
     }
     startTime() {
         const checkTime = (i) => {
             // add zero in front of numbers < 10
-            if (i < 10) { i = "0" + i };  
+            if (i < 10) { i = "0" + i };
             return i;
         }
         const today = new Date();
@@ -63,38 +63,13 @@ class Times extends Component {
         const t = setTimeout(this.startTime, 500);
     }
     loadZmanim() {
-        this.setState({zmanim: new Zmanim(new Date(), Location.lookup('Beer Sheva').getLatitude(), Location.lookup('Beer Sheva').getLongitude())});
+        this.setState({ zmanim: new Zmanim(new Date(), Location.lookup('Beer Sheva').getLatitude(), Location.lookup('Beer Sheva').getLongitude()) });
     }
-    
-//     setTimes() {
-//         const zmanim = new Zmanim();
-//         .suntime() ⇒ ZmanimTimesResult
-// .sunrise() ⇒ Date
-// .sunset() ⇒ Date
-// .hour() ⇒ number
-// .hourMins() ⇒ number
-// .gregEve() ⇒ Date
-// .nightHour() ⇒ number
-// .nightHourMins() ⇒ number
-// .hourOffset(hours) ⇒ Date
-// .chatzot() ⇒ Date
-// .chatzotNight() ⇒ Date
-// .alotHaShachar() ⇒ Date
-// .misheyakir() ⇒ Date
-// .misheyakirMachmir() ⇒ Date
-// .sofZmanShma() ⇒ Date
-// .sofZmanTfilla() ⇒ Date
-// .minchaGedola() ⇒ Date
-// .minchaKetana() ⇒ Date
-// .plagHaMincha() ⇒ Date
-// .tzeit() ⇒ Date
-// .neitzHaChama() ⇒ Date
-// .shkiah() ⇒ Date
-//     }
+
     setEvents() {
         //Events
         const events = HebrewCalendar.calendar(this.state.options);
-        
+
         events.forEach(event => {
             switch (event.constructor.name) {
                 case 'CandleLightingEvent':
@@ -161,51 +136,87 @@ class Times extends Component {
             let options = this.state.options;
             options.start = this.getFriday();
             options.end = this.getFriday();
-            this.setState({options:options});
+            this.setState({ options: options });
         } else if (this.props.get === timesEnum.shabbatExit) {
             let options = this.state.options;
             options.start = this.getSaturday();
             options.end = this.getSaturday();
-            this.setState({options:options});
+            this.setState({ options: options });
         }
 
-        if(this.props.get === timesEnum.currentTime) {
+        if (this.props.get === timesEnum.currentTime) {
             this.startTime();
         } else if (this.props.get === timesEnum.todaysDate) {
             this.startDate();
-        } 
+        }
         else {
             this.setEvents();
         }
     }
     render() {
-        
-        if((!this.props.options || (!this.props.options.start && !this.props.options.end)) &&
-        [timesEnum.shabbatEntrence, timesEnum.shabbatExit].includes(this.props.get)) {
-            return(<div></div>);
+
+        if ((!this.props.options || (!this.props.options.start && !this.props.options.end)) &&
+            [timesEnum.shabbatEntrence, timesEnum.shabbatExit].includes(this.props.get)) {
+            return (<div></div>);
         }
-                
+
         return (
             <div className={this.props.className}>
-            {
-                this.state.zmanim && this.props.get === timesEnum.sunrise && 
-                `זריחה: ${moment(this.state.zmanim.sunrise()).format('HH:mm')}`
-                ||
-                this.state.zmanim && this.props.get === timesEnum.sunset && 
-                `שקיעה: ${moment(this.state.zmanim.sunset()).format('HH:mm')}`
-                ||
-                this.props.get === timesEnum.currentTime && 
-                this.state.currentTime
-                ||
-                this.props.get === timesEnum.todaysDate &&
-                this.state.todayHebDateString
-                ||
-                this.props.get === timesEnum.shabbatEntrence && this.state.candleLightingEvent &&
-                `כניסת השבת: ${this.state.candleLightingEvent.eventTimeStr}`
-                ||
-                this.props.get === timesEnum.shabbatExit && this.state.havdalahEvent &&
-                `צאת השבת: ${this.state.havdalahEvent.eventTimeStr}`
-            }
+                {
+                    this.state.zmanim && this.props.get === timesEnum.chatzot &&
+                    `חצות: ${moment(this.state.zmanim.chatzot()).format('HH:mm')}`
+                    ||
+                    this.state.zmanim && this.props.get === timesEnum.chatzotNight &&
+                    `חצות בלילה: ${moment(this.state.zmanim.chatzotNight()).format('HH:mm')}`
+                    ||
+                    this.state.zmanim && this.props.get === timesEnum.alotHaShachar &&
+                    `עלות השחר: ${moment(this.state.zmanim.alotHaShachar()).format('HH:mm')}`
+                    ||
+                    this.state.zmanim && this.props.get === timesEnum.sofZmanShma &&
+                    `סוף זמן שמע: ${moment(this.state.zmanim.sofZmanShma()).format('HH:mm')}`
+                    ||
+                    this.state.zmanim && this.props.get === timesEnum.sofZmanTfilla &&
+                    `סוף זמן תפילה: ${moment(this.state.zmanim.sofZmanTfilla()).format('HH:mm')}`
+                    ||
+                    this.state.zmanim && this.props.get === timesEnum.minchaGedola &&
+                    `מנחה גדולה: ${moment(this.state.zmanim.minchaGedola()).format('HH:mm')}`
+                    ||
+                    this.state.zmanim && this.props.get === timesEnum.minchaKetana &&
+                    `מנחה קטנה: ${moment(this.state.zmanim.minchaKetana()).format('HH:mm')}`
+                    ||
+                    this.state.zmanim && this.props.get === timesEnum.plagHaMincha &&
+                    `פלג המנחה: ${moment(this.state.zmanim.plagHaMincha()).format('HH:mm')}`
+                    ||
+                    this.state.zmanim && this.props.get === timesEnum.tzeit &&
+                    `צאת השבת: ${moment(this.state.zmanim.tzeit()).format('HH:mm')}`
+                    ||
+                    this.state.zmanim && this.props.get === timesEnum.shkiah &&
+                    `שקיעה: ${moment(this.state.zmanim.shkiah()).format('HH:mm')}`
+                    ||
+                    this.state.zmanim && this.props.get === timesEnum.neitzHaChama &&
+                    `נץ החמה: ${moment(this.state.zmanim.neitzHaChama()).format('HH:mm')}`
+                    ||
+                    this.state.zmanim && this.props.get === timesEnum.alotHashachar &&
+                    `עלות השחר: ${moment(this.state.zmanim.alotHaShachar()).format('HH:mm')}`
+                    ||
+                    this.state.zmanim && this.props.get === timesEnum.sunrise &&
+                    `זריחה: ${moment(this.state.zmanim.sunrise()).format('HH:mm')}`
+                    ||
+                    this.state.zmanim && this.props.get === timesEnum.sunset &&
+                    `שקיעה: ${moment(this.state.zmanim.sunset()).format('HH:mm')}`
+                    ||
+                    this.props.get === timesEnum.currentTime &&
+                    this.state.currentTime
+                    ||
+                    this.props.get === timesEnum.todaysDate &&
+                    this.state.todayHebDateString
+                    ||
+                    this.props.get === timesEnum.shabbatEntrence && this.state.candleLightingEvent &&
+                    `כניסת השבת: ${this.state.candleLightingEvent.eventTimeStr}`
+                    ||
+                    this.props.get === timesEnum.shabbatExit && this.state.havdalahEvent &&
+                    `צאת השבת: ${this.state.havdalahEvent.eventTimeStr}`
+                }
             </div>
         )
     }

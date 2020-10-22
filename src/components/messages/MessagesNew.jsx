@@ -9,11 +9,11 @@ const propTypes = {
 class MessagesNew extends Component {
     render() {
         const { className } = this.props;
-        const segmentClasses = classNames(className, styles.container)
+        const segmentClasses = classNames(className, styles.container);
         return (
             <Segment className={segmentClasses}>
                 <div className="microsoft container">
-                    <div className={`marquee ${this.props.speed}`}>
+                    <div className={`marquee ${this.props.speed} ${this.props.stop ? 'stop' : ''}`}>
                         {this.props.children}
                     </div>
                 </div>

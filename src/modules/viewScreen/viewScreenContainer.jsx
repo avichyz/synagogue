@@ -7,7 +7,7 @@ import ViewScreen from './viewScreen';
 class ViewScreenContainer extends Component {
     render() {
         return (
-                <ViewScreen />
+                <ViewScreen editMode={this.props.editMode}/>
         )
     }
 }

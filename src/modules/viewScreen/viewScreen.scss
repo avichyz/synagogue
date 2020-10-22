@@ -9,6 +9,10 @@
 }
 :local .todaysTimesContainer {
     font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 100%;
 }
 :local .todaysTimesTitle{
     font-size: 40px;
@@ -17,16 +21,20 @@
 }
 :local .currentDate {
     font-size: 30px;
+    margin: auto;
 }
 
 :local .segmentContainer {
     margin: 0px !important;
     flex-grow: 1;
     direction: rtl;
+    display: flex;
 }
 
 :local .messageContainer {
     flex-grow: 1;
+    font-size: 26px !important;
+    font-weight: bold;
 }
 
 :local .header {

@@ -4,7 +4,7 @@ import Times from '../../components/times/Times';
 import MessagesNew from '../../components/messages/MessagesNew';
 import PropTypes from 'prop-types';
 import styles from './viewScreen.scss';
-import { Segment } from 'semantic-ui-react'
+import { Segment, Button } from 'semantic-ui-react'
 import CenterBoxContainer from './centerBox/CenterBoxContainer';
 import timesEnum from '../../timesEnum';
 
@@ -56,13 +56,13 @@ class ViewScreen extends Component {
             <div className={styles.container}>
                 <div className={styles.header}>
                     <Segment className={styles.segmentContainer}>
-                            <Times className={styles.currentDate} get={timesEnum.todaysDate} />
+                        <Times className={styles.currentDate} get={timesEnum.todaysDate} />
                     </Segment>
                     <Segment className={styles.segmentContainer}>
-                        <Times get={timesEnum.todaysDate} />
+                        <Times className={styles.currentDate} get={timesEnum.todaysDate} />
                     </Segment>
                     <Segment className={styles.segmentContainer}>
-                        <Times get={timesEnum.todaysDate} />
+                        <Times className={styles.currentDate} get={timesEnum.todaysDate} />
                     </Segment>
                 </div>
                 <div className={styles.centerRow}>
@@ -70,27 +70,48 @@ class ViewScreen extends Component {
                         <Times get={timesEnum.shabbatEntrence} />
                         <Times get={timesEnum.shabbatExit} />
                     </MessagesNew>
-                    <CenterBoxContainer className={styles.centerPanel}/>
+                    <CenterBoxContainer className={styles.centerPanel} editMode={this.props.editMode} />
                     <MessagesNew speed="stop" className={styles.leftSidePanel}>
-                            <div className={styles.todaysTimesContainer}>
-                                <div className={styles.todaysTimesTitle}>זמני היום</div>
-                                <Times get={timesEnum.sunrise} />
-                                <Times get={timesEnum.sunset} />
-                            </div>
+                        <div className={styles.todaysTimesContainer}>
+                            <div className={styles.todaysTimesTitle}>זמני היום</div>
+                            <Times get={timesEnum.sunrise} />
+                            <Times get={timesEnum.sunset} />
+                            <Times get={timesEnum.chatzot} />
+                            <Times get={timesEnum.chatzotNight} />
+                            <Times get={timesEnum.alotHaShachar} />
+                            <Times get={timesEnum.sofZmanShma} />
+                            <Times get={timesEnum.sofZmanTfilla} />
+                            <Times get={timesEnum.minchaGedola} />
+                            <Times get={timesEnum.minchaKetana} />
+                            <Times get={timesEnum.plagHaMincha} />
+                            <Times get={timesEnum.tzeit} />
+                        </div>
                     </MessagesNew>
                 </div>
                 <div className={styles.footer}>
-                    <MessagesNew className={styles.messageContainer}>
+                    <MessagesNew className={styles.messageContainer} speed="superSlow" stop={this.props.editMode}>
+                        {
+                            this.props.editMode &&
+                            <Button secondary>ערוך הודעות</Button>
+                        }
                         {this.state.leftMessages.map((message, index) => {
                             return <li key={index}>{message.value}</li>
                         })}
                     </MessagesNew>
-                    <MessagesNew className={styles.messageContainer}>
+                    <MessagesNew className={styles.messageContainer} speed="superSlow" stop={this.props.editMode}>
+                        {
+                            this.props.editMode &&
+                            <Button secondary>ערוך הודעות</Button>
+                        }
                         {this.state.centerMessages.map((message, index) => {
                             return <li key={index}>{message.value}</li>
                         })}
                     </MessagesNew>
-                    <MessagesNew className={styles.messageContainer}>
+                    <MessagesNew className={styles.messageContainer} speed="superSlow" stop={this.props.editMode}>
+                        {
+                            this.props.editMode &&
+                            <Button secondary>ערוך הודעות</Button>
+                        }
                         {this.state.rightMessages.map((message, index) => {
                             return <li key={index}>{message.value}</li>
                         })}
