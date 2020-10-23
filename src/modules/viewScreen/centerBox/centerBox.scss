@@ -1,3 +1,24 @@
 :local .textArea {
     background-color: white;
 }
+
+:local .imageContainer {
+    background-repeat: round;
+    display: flex;
+    flex-direction: column;
+}
+:local .indexText {
+    
+}
+:local .nextPrevButton {
+    width: 30%;
+}
+:local .indexContainer {
+    font-weight: bolder;
+    font-size: 30px;
+    margin: auto auto 0 auto;
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    align-items: center;
+}

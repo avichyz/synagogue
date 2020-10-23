@@ -18,7 +18,7 @@ class CenterBox extends Component {
     }
 
     render() {
-        const { textContent, imgUrl, className } = this.props;
+        const { textContent, imgUrl,onAddNewText, onSave, className } = this.props;
 
         return (<Fragment>
             {
@@ -28,22 +28,24 @@ class CenterBox extends Component {
             {
                 textContent &&
                 <TextEditor
-                    onSave={this.props.onSave}
+                    onSave={onSave}
+                    onAddNewText={onAddNewText}
                     editMode={this.props.editMode}
-                    content={textContent} />
+                    data={textContent}
+                    index={this.props.index}
+                    hebItemTypeName={this.props.hebItemTypeName} />
                 ||
-                // textContent &&
-                // <Segment className={this.props.className}>
-                //     <TextAreaContainer 
-                //     onSave={this.props.onSave} 
-                //     content={textContent}/>
-                // </Segment>
-                // ||
                 imgUrl &&
-                <Segment className={this.props.className} style={{ backgroundImage: `url(${imgUrl})`, backgroundRepeat: 'round' }}>
+                <Segment className={`${this.props.className} ${styles.imageContainer}`} style={{ backgroundImage: `url(${imgUrl})`}}>
                     {
                         this.props.editMode &&
-                        <Button secondary>ערוך תמונות</Button>
+                        <div className={styles.indexContainer}>
+                            <Button secondary className={styles.nextPrevButton}>ערוך תמונה</Button>
+                            <div className={styles.indexText}>
+                                {`${this.props.hebItemTypeName}: ${this.props.index}`}
+                            </div>
+                            <Button secondary className={styles.nextPrevButton}>הוסף תמונה</Button>
+                        </div>
                     }
                 </Segment>
             }

@@ -6,14 +6,19 @@ class CenterBoxContainer extends Component {
     constructor(props) {
         super(props);
         this.onSave=this.onSave.bind(this);
+        this.onAddNewText = this.onAddNewText.bind(this);
+        this.onAddNewImage = this.onAddNewImage.bind(this);
+        this.onEditImageClick = this.onEditImageClick.bind(this);
         this.moveToNextItem = this.moveToNextItem.bind(this);
         this.moveToPrevItem = this.moveToPrevItem.bind(this);
         this.state = {
             images: ['https://www.talkwalker.com/images/2020/blog-headers/image-analysis.png'],
             texts: [{
+                id: Math.random(),
                 content:'<span style="color: blue">var</span> foo = <span style="color: green">"bar"</span>;',
                 direction: 'ltr'
             },{
+                id: Math.random(),
                 content:`ממתק לפרשת נח🔥
 
                 איציק למד בישיבה בארץ או יותר נכון ישב בישיבה כי כמעט לא למד, יום אחד פנה ראש הישיבה אל איציק ואמר לו ״בעוד יומיים ייערך מבחן ואם לא תקבל ציון טוב לא תוכל להמשיך לבזבז את זמנך כאן בישיבה"", איציק פנה לחבר וביקש ממנו שירשה לו להעתיק ממנו במבחן, החבר אמר לו ""אני מסכים בתנאי שנלמד בלילה את כל החומר של המבחן כדי שתתמצא קצת בחומר ותדע במה מדובר''. 
@@ -56,14 +61,43 @@ class CenterBoxContainer extends Component {
         if (this.state.currentImage===null && this.state.currentText===null) {
             this.setState({ currentImage: 0, currentItemType: "image" });
         } else if (this.state.currentItemType==="text") {
-            this.setState({ currentImage: Math.abs((this.state.currentImage||0)-1) % this.state.images.length, currentItemType: "image" });
+            this.setState({ currentImage: this.getPrevIndex(this.state.currentImage, this.state.images.length), currentItemType: "image" });
         } else {
-            this.setState({ currentText: Math.abs((this.state.currentText||0)-1) % this.state.texts.length, currentItemType: "text" });
+            this.setState({ currentText: this.getPrevIndex(this.state.currentText, this.state.texts.length), currentItemType: "text" });
         }
     }
-    onSave(content) {
+    getPrevIndex(currentIndex, arrayLength) {
+        if(currentIndex === null) {
+            return 0;
+        } else if(currentIndex === 0) {
+            return (arrayLength - 1);
+        } else {
+            return currentIndex - 1; 
+        }
+    }
+    onAddNewText() {
         let texts = this.state.texts;
-        texts.push({content:content});
+        const newId = Math.random().toString();
+        texts.push({id: newId, content:''});
+        this.setState({texts: texts, currentText: texts.length-1});
+    }
+    onAddNewImage() {
+
+    }
+    onEditImageClick() {
+
+    }
+    onSave(id, content) {
+        let texts = this.state.texts;
+        const foundIdIndex = texts.findIndex(item => item.id === id);
+        if(foundIdIndex > -1) {
+            texts[foundIdIndex].content = content;
+
+        } else {
+            const newId = Math.random().toString();
+            texts.push({id: newId, content:content});
+        }
+        
         this.setState({texts:texts});
     }
     componentDidMount() {
@@ -78,11 +112,16 @@ class CenterBoxContainer extends Component {
             <CenterBox
                 className={this.props.className}
                 onSave={this.onSave}
+                onAddNewText={this.onAddNewText}
+                onAddNewImage={this.onAddNewImage}
+                onEditImageClick={this.onEditImageClick}
                 editMode={this.props.editMode}
                 onNextItem={this.moveToNextItem}
                 onPrevItem={this.moveToPrevItem}
-                imgUrl={currentItemType==="image"&&currentImage != null ? images[currentImage] : null}
-                textContent={currentItemType==="text"&&currentText != null ? texts[currentText] : null}
+                hebItemTypeName={currentItemType === "image" ? "תמונה" : "טקסט"}
+                index={currentItemType === "image" ? currentImage : currentText}
+                imgUrl={currentItemType === "image" && currentImage != null ? images[currentImage] : null}
+                textContent={currentItemType === "text" && currentText != null ? texts[currentText] : null}
             />
 
         )
