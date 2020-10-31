@@ -7,55 +7,32 @@ import styles from './viewScreen.scss';
 import { Segment, Button } from 'semantic-ui-react'
 import CenterBoxContainer from './centerBox/CenterBoxContainer';
 import timesEnum from '../../timesEnum';
+import { download } from '../../utils/fileSaver';
 
-
-const proptypes = {
-}
 class ViewScreen extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            leftMessages: [{
-                id: 'l1',
-                value: 'הודעה בצד שמאל'
-            }, {
-                id: 'l2',
-                value: 'הודעה מעניינת בצד שמאל'
-            }, {
-                id: 'l3',
-                value: 'הודעה חשובה בצד שמאל'
-            }],
-            centerMessages: [{
-                id: 'c1',
-                value: 'הודעה באמצע'
-            }, {
-                id: 'c2',
-                value: 'הודעה מעניינת באמצע'
-            }, {
-                id: 'c3',
-                value: 'הודעה חשובה באמצע'
-            }],
-            rightMessages: [{
-                id: 'r1',
-                value: 'הודעה בצד ימין'
-            }, {
-                id: 'r2',
-                value: 'הודעה מעניינת בצד ימין'
-            }, {
-                id: 'r3',
-                value: 'הודעה חשובה בצד ימין'
-            },
-            ]
-        };
+    componentDidMount() {
+        const fileSelector = document.getElementById('file-selector');
+        fileSelector.addEventListener('change', (event) => {this.props.loadDataSource(event)});
     }
-
     render() {
-        const { selectedImageSrc } = this.props;
-
+        const {dataStore} = this.props;
         return (
+            !dataStore &&
+            <div>no data Store
+                <input type="file" id="file-selector"></input>
+            </div>
+            ||
             <div className={styles.container}>
                 <div className={styles.header}>
                     <Segment className={styles.segmentContainer}>
+                        {
+                            this.props.editMode &&
+                            <Button onClick={this.props.gotoViewScreen}>Go to view screen</Button>
+                            ||
+                            <Button onClick={this.props.gotoEditScreen}>Go to edit screen</Button>
+                        }
+                        <Button onClick={() => { download(JSON.stringify(dataStore), "export", "txt") }}>Download</Button>
+                        <input type="file" id="file-selector"></input>
                         <Times className={styles.currentDate} get={timesEnum.todaysDate} />
                     </Segment>
                     <Segment className={styles.segmentContainer}>
@@ -70,7 +47,18 @@ class ViewScreen extends Component {
                         <Times get={timesEnum.shabbatEntrence} />
                         <Times get={timesEnum.shabbatExit} />
                     </MessagesNew>
-                    <CenterBoxContainer className={styles.centerPanel} editMode={this.props.editMode} />
+                    <CenterBoxContainer 
+                        className={styles.centerPanel} 
+                        editMode={this.props.editMode}
+                        texts={this.props.dataStore.texts}
+                        images={this.props.dataStore.images}
+                        onSaveText={this.props.onSaveText}
+                        onAddNewText={this.props.onAddNewText}
+                        onDeleteText={this.props.onDeleteText}
+                        onAddNewImage={this.props.onAddNewImage}
+                        onDeleteImage={this.props.onDeleteImage}
+                        onEditImageClick={this.props.onEditImageClick}
+                    />
                     <MessagesNew speed="stop" className={styles.leftSidePanel}>
                         <div className={styles.todaysTimesContainer}>
                             <div className={styles.todaysTimesTitle}>זמני היום</div>
@@ -94,7 +82,7 @@ class ViewScreen extends Component {
                             this.props.editMode &&
                             <Button secondary>ערוך הודעות</Button>
                         }
-                        {this.state.leftMessages.map((message, index) => {
+                        {dataStore.leftMessages.map((message, index) => {
                             return <li key={index}>{message.value}</li>
                         })}
                     </MessagesNew>
@@ -103,7 +91,7 @@ class ViewScreen extends Component {
                             this.props.editMode &&
                             <Button secondary>ערוך הודעות</Button>
                         }
-                        {this.state.centerMessages.map((message, index) => {
+                        {dataStore.centerMessages.map((message, index) => {
                             return <li key={index}>{message.value}</li>
                         })}
                     </MessagesNew>
@@ -112,7 +100,7 @@ class ViewScreen extends Component {
                             this.props.editMode &&
                             <Button secondary>ערוך הודעות</Button>
                         }
-                        {this.state.rightMessages.map((message, index) => {
+                        {dataStore.rightMessages.map((message, index) => {
                             return <li key={index}>{message.value}</li>
                         })}
                     </MessagesNew>
@@ -122,5 +110,4 @@ class ViewScreen extends Component {
     }
 }
 
-ViewScreen.propTypes = proptypes;
 export default ViewScreen;

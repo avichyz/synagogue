@@ -18,18 +18,22 @@ class CenterBox extends Component {
     }
 
     render() {
-        const { textContent, imgUrl,onAddNewText, onSave, className } = this.props;
+        const { textContent, imgUrl,onAddNewText, onDeleteText, onAddNewImage, onDeleteImage, onSave, className } = this.props;
 
         return (<Fragment>
             {
                 this.props.editMode &&
-                <Button secondary onClick={this.props.onPrevItem}>הפריט הקודם</Button>
+                <div className={styles.nextPrevContainer}>
+                    <Button secondary className={styles.nextPrevButton} onClick={this.props.onPrevImage}>התמונה הקודמת</Button>
+                    <Button secondary className={styles.nextPrevButton} onClick={this.props.onPrevText}>הטקסט הקודם</Button>
+                </div>
             }
             {
                 textContent &&
                 <TextEditor
                     onSave={onSave}
                     onAddNewText={onAddNewText}
+                    onDeleteText={onDeleteText}
                     editMode={this.props.editMode}
                     data={textContent}
                     index={this.props.index}
@@ -40,18 +44,21 @@ class CenterBox extends Component {
                     {
                         this.props.editMode &&
                         <div className={styles.indexContainer}>
-                            <Button secondary className={styles.nextPrevButton}>ערוך תמונה</Button>
+                            <Button secondary onClick={onDeleteImage} className={styles.innerButton}>מחק תמונה</Button>
                             <div className={styles.indexText}>
                                 {`${this.props.hebItemTypeName}: ${this.props.index}`}
                             </div>
-                            <Button secondary className={styles.nextPrevButton}>הוסף תמונה</Button>
+                            <Button secondary onClick={onAddNewImage} className={styles.innerButton}>הוסף תמונה</Button>
                         </div>
                     }
                 </Segment>
             }
             {
                 this.props.editMode &&
-                <Button secondary onClick={this.props.onNextItem}>הפריט הבא</Button>
+                <div className={styles.nextPrevContainer}>
+                    <Button secondary className={styles.nextPrevButton} onClick={this.props.onNextImage}>התמונה הבאה</Button>
+                    <Button secondary className={styles.nextPrevButton} onClick={this.props.onNextText}>הטקסט הבא</Button>
+                </div>
             }
         </Fragment>
         )

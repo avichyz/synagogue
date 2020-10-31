@@ -10,7 +10,15 @@
 :local .indexText {
     
 }
+:local .nextPrevContainer {
+    display: flex;
+    flex-direction: column;
+}
 :local .nextPrevButton {
+    flex-grow: 1;
+    border-top: solid white 1px !important;
+}
+:local .innerButton {
     width: 30%;
 }
 :local .indexContainer {

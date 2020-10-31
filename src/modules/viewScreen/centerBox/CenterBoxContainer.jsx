@@ -5,65 +5,55 @@ import CenterBox from './CenterBox';
 class CenterBoxContainer extends Component {
     constructor(props) {
         super(props);
-        this.onSave=this.onSave.bind(this);
-        this.onAddNewText = this.onAddNewText.bind(this);
-        this.onAddNewImage = this.onAddNewImage.bind(this);
-        this.onEditImageClick = this.onEditImageClick.bind(this);
         this.moveToNextItem = this.moveToNextItem.bind(this);
         this.moveToPrevItem = this.moveToPrevItem.bind(this);
-        this.state = {
-            images: ['https://www.talkwalker.com/images/2020/blog-headers/image-analysis.png'],
-            texts: [{
-                id: Math.random(),
-                content:'<span style="color: blue">var</span> foo = <span style="color: green">"bar"</span>;',
-                direction: 'ltr'
-            },{
-                id: Math.random(),
-                content:`ממתק לפרשת נח🔥
-
-                איציק למד בישיבה בארץ או יותר נכון ישב בישיבה כי כמעט לא למד, יום אחד פנה ראש הישיבה אל איציק ואמר לו ״בעוד יומיים ייערך מבחן ואם לא תקבל ציון טוב לא תוכל להמשיך לבזבז את זמנך כאן בישיבה"", איציק פנה לחבר וביקש ממנו שירשה לו להעתיק ממנו במבחן, החבר אמר לו ""אני מסכים בתנאי שנלמד בלילה את כל החומר של המבחן כדי שתתמצא קצת בחומר ותדע במה מדובר''. 
-                
-                בלילה ישבו שניהם במשך כמה שעות ולמדו את כל הגמרא, ולמחרת במבחן כמעט ולא היה לאיציק צורך להעתיק כי די ידע את החומר, המורה שבדק את המבחנים נדהם לראות שאיציק ענה יפה על כל השאלות ונתן לו ציון 100, למחרת הגיע לכיתה ושאל את איציק ״איך עשית את זה?״ איציק ענה ""למדתי בלילה עם החבר את כל החומר.''
-                המורה נכנס לכתה ואמר לכל התלמידים ""תדעו לכם שאיציק הוא אחד התלמידים הכי מוצלחים כאן בכתה"" פניו של איציק אורו, המילים הטובות של המורה רוממו את רוחו ומאותו יום איציק החל להשתתף בשיעורים, ללמוד בהתמדה והפך להיות באמת אחד הבחורים הטובים בישיבה, ב""ה כיום איציק מכהן כרב בעיר גדולה בעולם.
-                
-                פרשת השבוע פרשת נח פותחת במילים ״אלה תולדות נח״ וממשיכה נוח איש צדיק תמים וכו'.
-                
-                נשאלת השאלה אם התורה רוצה לספר על תולדותיו של נח למה התורה מספרת על כך שהיה צדיק תמים וכו?
-                
-                רש""י מסביר ""הואל והזכירו סיפר בשבחו"" אבל אם כך למה בפרשה הקודמת כשהתורה מספרת לנו על לידתו של נוח לא כתוב שהיה צדיק ולמה דווקא כאן מזכירים זאת?
-                
-                מוסבר בתורת החסידות, כתוב שכשמדברים על אדם לשון הרע גורמים לו נזק כי עצם הדיבור הרע שאומרים עליו יוצר לו אנרגיה שלילית, מזה אנחנו יכולים ללמוד שכשמדברים טוב על אדם זה נותן לו כוח ואנרגיה חיובית, בפרשתינו נוח עומד בפני משימה קשה לבנות תיבה ולעמוד מול כל אנשי דורו החטאים מבלי ללמוד ממעשיהם ומבלי ליפול, עכשיו כשנוח צריך כוח מיוחד מדברת התורה בשבחו כדי לתת לו את הכוח הנדרש.
-                
-                יהי רצון שנלמד לדבר אחד על השני רק טוב, כך ניתן כוחות אחד לשני ונוכל לעמוד במשימות שהקב""ה מציב בפנינו עד להשלמת העולם לקראת גאולה שלימה שתבוא בקרוב ממש.
-                
-                לשון הרע לא מדבר אלי!
-                
-                שבת שלום👍🏻
-                נכתב ע""י הרב נחמיה וילהלם.
-                `,
-                direction: 'rtl'
-            }],
-            currentImage: null,
-            currentText: null,
-            currentItemType: null
-        };
+        this.moveToPrevImage = this.moveToPrevImage.bind(this);
+        this.moveToPrevText = this.moveToPrevText.bind(this);
+        this.moveToNextImage = this.moveToNextImage.bind(this);
+        this.moveToNextText = this.moveToNextText.bind(this);
+        this.onAddNewText = this.onAddNewText.bind(this);
+        this.onDeleteText = this.onDeleteText.bind(this);
+        this.onAddNewImage = this.onAddNewImage.bind(this);
+        this.onDeleteImage = this.onDeleteImage.bind(this);
+        this.state = { currentImage: null, currentText: null, currentItemType: null}
     }
     moveToNextItem() {
         if (this.state.currentImage===null && this.state.currentText===null) {
             this.setState({ currentImage: 0, currentItemType: "image" });
         } else if (this.state.currentItemType==="text") {
-            this.setState({ currentImage: ((this.state.currentImage||0)+1) % this.state.images.length, currentItemType: "image" });
+            this.moveToNextImage();
         } else {
-            this.setState({ currentText: ((this.state.currentText||0)+1) % this.state.texts.length, currentItemType: "text" });
+            this.moveToNextText();
         }
     }
     moveToPrevItem() {
         if (this.state.currentImage===null && this.state.currentText===null) {
             this.setState({ currentImage: 0, currentItemType: "image" });
         } else if (this.state.currentItemType==="text") {
-            this.setState({ currentImage: this.getPrevIndex(this.state.currentImage, this.state.images.length), currentItemType: "image" });
+            this.moveToPrevImage();
         } else {
-            this.setState({ currentText: this.getPrevIndex(this.state.currentText, this.state.texts.length), currentItemType: "text" });
+            this.moveToPrevText();
+        }
+    }
+    moveToPrevImage() {
+        this.setState({ currentImage: this.getPrevIndex(this.state.currentImage, this.props.images.length), currentItemType: "image" });
+    }
+    moveToPrevText() {
+        this.setState({ currentText: this.getPrevIndex(this.state.currentText, this.props.texts.length), currentItemType: "text" });
+    }
+    moveToNextImage() {
+        if (this.state.currentImage===null && this.state.currentText===null) {
+            this.setState({ currentImage: 0, currentItemType: "image" });
+        } else {
+            this.setState({ currentImage: ((this.state.currentImage||0)+1) % this.props.images.length, currentItemType: "image" });
+        } 
+    }
+    moveToNextText() {
+        if (this.state.currentImage===null && this.state.currentText===null) {
+            this.setState({ currentText: 0, currentItemType: "text" });
+        }
+         else {
+            this.setState({ currentText: ((this.state.currentText||0)+1) % this.props.texts.length, currentItemType: "text" });
         }
     }
     getPrevIndex(currentIndex, arrayLength) {
@@ -75,30 +65,24 @@ class CenterBoxContainer extends Component {
             return currentIndex - 1; 
         }
     }
+    onSaveText(id, content) {
+        this.props.onSaveText(id, content);
+    }
     onAddNewText() {
-        let texts = this.state.texts;
-        const newId = Math.random().toString();
-        texts.push({id: newId, content:''});
-        this.setState({texts: texts, currentText: texts.length-1});
+        this.props.onAddNewText();
+        this.moveToNextText();
+    }
+    onDeleteText() {
+        this.props.onDeleteText();
+        this.moveToPrevText();
     }
     onAddNewImage() {
-
+        this.props.onAddNewImage();
+        this.moveToNextImage();
     }
-    onEditImageClick() {
-
-    }
-    onSave(id, content) {
-        let texts = this.state.texts;
-        const foundIdIndex = texts.findIndex(item => item.id === id);
-        if(foundIdIndex > -1) {
-            texts[foundIdIndex].content = content;
-
-        } else {
-            const newId = Math.random().toString();
-            texts.push({id: newId, content:content});
-        }
-        
-        this.setState({texts:texts});
+    onDeleteImage() {
+        this.props.onDeleteImage();
+        this.moveToPrevImage();
     }
     componentDidMount() {
         this.moveToNextItem();
@@ -107,17 +91,23 @@ class CenterBoxContainer extends Component {
         } 
     }
     render() {
-        const { texts, images, currentImage, currentText, currentItemType } = this.state;
+        const { currentImage, currentText, currentItemType } = this.state;
+        const { texts, images } = this.props;
         return (
             <CenterBox
                 className={this.props.className}
-                onSave={this.onSave}
+                onSave={this.props.onSaveText}
                 onAddNewText={this.onAddNewText}
+                onDeleteText={this.onDeleteText}
                 onAddNewImage={this.onAddNewImage}
-                onEditImageClick={this.onEditImageClick}
+                onEditImageClick={this.props.onEditImageClick}
                 editMode={this.props.editMode}
                 onNextItem={this.moveToNextItem}
                 onPrevItem={this.moveToPrevItem}
+                onPrevImage = {this.moveToPrevImage}
+                onPrevText = {this.moveToPrevText}
+                onNextImage = {this.moveToNextImage}
+                onNextText = {this.moveToNextText}
                 hebItemTypeName={currentItemType === "image" ? "תמונה" : "טקסט"}
                 index={currentItemType === "image" ? currentImage : currentText}
                 imgUrl={currentItemType === "image" && currentImage != null ? images[currentImage] : null}

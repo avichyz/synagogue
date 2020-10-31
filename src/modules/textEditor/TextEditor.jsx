@@ -37,15 +37,16 @@ class TextEditor extends React.Component {
         }
     }
     render() {
-        const {onAddNewText} = this.props;
+        const {onAddNewText, onDeleteText} = this.props;
         return (
             <Fragment>
                 <div className={styles.container}>
                 <textarea id="editor" name="editor">
                 </textarea>
                 {
+                    this.props.editMode && 
                     <div className={styles.indexContainer}>
-                        <Button secondary className={styles.nextPrevButton}>ערוך טקסט</Button>
+                        <Button secondary onClick={onDeleteText} className={styles.nextPrevButton}>מחק טקסט</Button>
                             <div className={styles.indexText}>
                                 {`${this.props.hebItemTypeName}: ${this.props.index}`}
                             </div>
